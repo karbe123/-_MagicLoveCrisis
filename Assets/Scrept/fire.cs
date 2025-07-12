@@ -5,40 +5,39 @@ using UnityEngine;
 public class fire : MonoBehaviour
 {
     private Vector2 direction;
+    public float speed = 8f;
+
     public void SetDirection(Vector2 dir)
     {
         direction = dir.normalized;
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)//지피티가하랫음...
+        {
+            rb.gravityScale = 0f; //중력 0
+            rb.velocity = direction * speed;
+
+        }
+        else
+        {
+            Debug.LogWarning(" Rigidbody2D 없음!");
+        }
     }
 
-    public float speed = 8f;
-    private Rigidbody2D fireRigidbody2D;
-    
-
-    // Start is called before the first frame update
     void Start()
     {
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.gravityScale = 0f; // 중력 영향 제거!
-            rb.velocity = direction * speed;
-        }
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, 3f); // 이제 velocity 설정은 하지 말 것
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player") //플레이어 태그 필요함. 걸어줘
+        if (other.CompareTag("Player"))
         {
-
             other.GetComponent<Player>().Die();
+            FindObjectOfType<GameManager>().EndGame(); //죽음선언해에 게임 메니저에서 다음씬 ㄱㄴ
             Destroy(gameObject);
         }
     }
+}
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}
+

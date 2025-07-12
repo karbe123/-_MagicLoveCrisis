@@ -1,0 +1,10 @@
+새.png
+size:1105,480
+filter:Linear,Linear
+pma:true
+새 2
+bounds:2,2,476,895
+offsets:0,1,476,896
+rotate:90
+새날개 2
+bounds:899,146,204,332
